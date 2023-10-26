@@ -87,7 +87,7 @@ thinc
 tokenizers
 torch
 tqdm
-transformers
+transformers==0.11.1
 typer
 typing_extensions
 tzdata
