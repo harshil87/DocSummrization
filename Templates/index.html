@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    
+
+    <div class="form">
+            <form id="summarize-form" method="POST" action="{% url 'document_upload' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div id="drop-area" class="drop">
+                    <p class="drop-text">click to select a file</p>
+                    <input type="file" name="fileinput" id="file-input" accept=".pdf, .docx" multiple
+                        style="display: none;">
+                </div>
+                <div class="form-group">
+                    <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                </div>
+                <ul id="file-list" style='padding-inline-start: -40px;'></ul>
+                <div class="text-center">
+                    <input type="submit" class="btn btn-primary" value="Summarize" id="button">
+                </div>
+            </form><br>
+            {% if files  %}
+            
+            <table class="table table-bordered table-striped" style="width:93%;">
+                <thead>
+                    <tr>
+                        <th>File Name</th>
+                        <th>Uploaded Date</th>
+                        <th>Summary</th>
+                        <th>Download</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for file in files %}
+                    <tr>
+                        <td>
+                            <h6>{{ file.file_name }}</h6>
+                        </td>
+                        <td>
+                            <h6>{{ file.upload_date }}</h6>
+                        </td>
+                        <td>
+                            <div class="content">
+                                <h6><p class="summary" style='display:none;'>{{ file.summary }}</p>
+                                <a href="#" class="read-more">See Summary</a></h6>
+                            </div>
+                        </td>
+                        <td><a href="{% url 'download_file' id=file.id %}">
+                                <h4><i class="fa-solid fa-file-arrow-down"></i></h4>
+                            </a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table> 
+            {% endif %} 
+        </div> 
+
+        
+
+{% endblock %}
